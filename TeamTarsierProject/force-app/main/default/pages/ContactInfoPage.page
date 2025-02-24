@@ -1,0 +1,116 @@
+<apex:page controller="UserInfoController" renderAs="pdf" applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="false">
+    <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                }
+                h1 {
+                    color: #333;
+                    font-size: 24px;
+                }
+                h2 {
+                    color: #555;
+                    font-size: 20px;
+                }
+                h3 {
+                    color: #777;
+                    font-size: 16px;
+                }
+                /* .account-info, .case-info {
+                    margin-top: 20px;
+                }
+                .account-info table, .case-info table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                .account-info th, .account-info td, .case-info th, .case-info td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                }
+                .account-info th, .case-info th {
+                    background-color: #f2f2f2;
+                } */
+            </style>
+        </head>
+        <body>
+            <h1>Most Recent Account Information</h1>
+            <div class="account-info">
+                <table>
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Account Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>{!mostRecentAccount.Name}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>{!mostRecentAccount.Phone}</td>
+                    </tr>
+                    <tr>
+                        <td>Date of Birth</td>
+                        <td>
+                            <apex:outputText value="{0, date, MM/dd/yyyy}">
+                                <apex:param value="{!mostRecentAccount.Date_of_Birth__c}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Military Branch</td>
+                        <td>{!mostRecentAccount.Military_Branch__c}</td>
+                    </tr>
+                    <tr>
+                        <td>Current Disability Rating</td>
+                        <td>{!mostRecentAccount.Current_Disability_Rating__c}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Case Information Section -->
+
+            <div class="case-info">
+                <br/>
+                <br/>
+                <br/>
+                <h1>Case Information</h1>
+                <apex:outputPanel rendered="{!NOT(ISNULL(accountCases)) && accountCases.size > 0}">
+                    <apex:repeat value="{!accountCases}" var="case">
+                        <h2>Case {!case.CaseNumber}</h2>
+                        <h3>Subject: {!case.Subject}</h3>
+                        <h4>Description: {!case.Description}</h4>
+                        <table>
+                            <tr>
+                                <th>Field</th>
+                                <th>Value</th>
+                            </tr>
+                            <tr>
+                                <td>Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td>{!case.Status}</td>
+                            </tr>
+                            <tr>
+                                <td>Case Origin</td>
+                                <td>{!case.Origin}</td>
+                            </tr>
+                            <tr>
+                                <td>Claim Type</td>
+                                <td>{!case.Claim_Type__c}</td>
+                            </tr>
+                            <tr>
+                                <td>Reason</td>
+                                <td>{!case.Reason}</td>
+                            </tr>
+                        </table>
+                        <br />
+                    </apex:repeat>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!ISNULL(accountCases) || accountCases.size == 0}">
+                    <p>No cases found for this account.</p>
+                </apex:outputPanel>
+            </div>
+        </body>
+    </html>
+</apex:page>
