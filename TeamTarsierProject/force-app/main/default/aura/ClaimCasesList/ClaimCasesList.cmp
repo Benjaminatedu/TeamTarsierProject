@@ -1,0 +1,42 @@
+<aura:component controller="ClaimCasesListController" implements="flexipage:availableForAllPageTypes" access="global">
+    <!-- Attributes -->
+    <aura:attribute name="cases" type="Case[]" />
+    <aura:attribute name="error" type="String" />
+
+    <!-- Handler for initialization -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- Add custom CSS for borders -->
+    <aura:html tag="style">
+        .case-card {
+            border: 1px solid #d8dde6;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            padding: 12px;
+        }
+    </aura:html>
+
+    <!-- Display cases in a vertical stack -->
+    <lightning:card title="Most Recent Claim Cases" iconName="standard:case">
+        <aura:if isTrue="{!not(empty(v.cases))}">
+            <div>
+                <aura:iteration items="{!v.cases}" var="case">
+                    <div class="case-card">
+                        <p><strong>Case Number: </strong> {!case.CaseNumber}</p>
+                        <p><strong>Status: </strong> {!case.Status}</p>
+                        <p><strong>Subject: </strong> {!case.Subject}</p>
+                        <lightning:button label="View Case" onclick="{!c.navigateToCase}" value="{!case.Id}" variant="brand" class="slds-m-top_small" />
+                    </div>
+                </aura:iteration>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!empty(v.cases)}">
+            <p>No Claim cases found.</p>
+        </aura:if>
+    </lightning:card>
+
+    <!-- Display errors -->
+    <aura:if isTrue="{!not(empty(v.error))}">
+        <p class="slds-text-color_error">{!v.error}</p>
+    </aura:if>
+</aura:component>

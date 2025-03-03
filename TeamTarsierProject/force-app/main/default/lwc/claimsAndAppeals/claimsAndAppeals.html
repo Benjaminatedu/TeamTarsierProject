@@ -1,0 +1,14 @@
+<template>
+    <div class="slds-grid slds-wrap">
+        <!-- Left Panel: Claims List -->
+        <div class="slds-col slds-size_1-of-2 slds-p-right_medium">
+            <c-claim-cases onclaimselected={handleClaimSelected}></c-claim-cases>
+        </div>
+
+        <!-- Right Panel: Appeals List and Create Appeal Button -->
+        <div class="slds-col slds-size_1-of-2 slds-grid slds-grid_vertical slds-grid_align-center">
+            <c-create-appeal-button claim-id={selectedClaimId} style="margin-bottom: 10px;"></c-create-appeal-button>
+            <c-appeals-list></c-appeals-list>
+        </div>
+    </div>
+</template>

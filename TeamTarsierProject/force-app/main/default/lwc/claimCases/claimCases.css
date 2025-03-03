@@ -1,0 +1,63 @@
+.slds-box {
+    background-color: #ffffff;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.slds-item {
+    border-bottom: 1px solid #dddbda;
+    padding: 12px;
+    cursor: pointer; /* Make claims clickable */
+}
+
+.slds-item:last-child {
+    border-bottom: none;
+}
+
+.slds-item:hover {
+    background-color: #f3f2f2; /* Highlight on hover */
+}
+
+/* Status-specific colors */
+.status-received {
+    border-left: 4px solid #0070d2; /* Blue */
+}
+
+.status-change-requested {
+    border-left: 4px solid #ffb75d; /* Orange */
+}
+
+.status-under-review {
+    border-left: 4px solid #54698d; /* Dark Blue */
+}
+
+.status-evidence-gathering {
+    border-left: 4px solid #4bc076; /* Green */
+}
+
+.status-decision-pending {
+    border-left: 4px solid #ff9e2c; /* Dark Orange */
+}
+
+.status-approved {
+    border-left: 4px solid #04844b; /* Dark Green */
+}
+
+.status-denied {
+    border-left: 4px solid #c23934; /* Red */
+}
+
+.status-new-closed {
+    border-left: 4px solid #777777; /* Gray */
+}
+
+.status-pending-review {
+    border-left: 4px solid #ffd04f; /* Yellow */
+}
+
+/* Highlight the selected claim */
+.selected-claim {
+    background-color: #f0f8ff; /* Light blue background */
+    border: 2px solid #0070d2; /* Salesforce blue border */
+}

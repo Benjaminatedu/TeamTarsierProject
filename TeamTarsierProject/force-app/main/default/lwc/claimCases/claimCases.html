@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Claim Cases" icon-name="standard:case">
+        <template if:true={cases}>
+            <ul class="slds-list slds-list_vertical slds-box slds-m-around_medium">
+                <template for:each={cases} for:item="caseRecord">
+                    <li key={caseRecord.Id} class="slds-item slds-p-around_small" data-id={caseRecord.Id} onclick={handleClaimClick}>
+                        <!-- Bind the precomputed classString to the class attribute -->
+                        <div class={caseRecord.classString}>
+                            <div class="slds-text-heading_small">{caseRecord.CaseNumber}</div>
+                            <div class="slds-text-body_regular">{caseRecord.Subject}</div>
+                            <div class="slds-text-body_small">Status: {caseRecord.Status}</div>
+                            <div class="slds-text-body_small">Description: {caseRecord.Description}</div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </template>
+        <template if:true={error}>
+            <div class="slds-text-color_error slds-m-around_medium">
+                An error occurred while loading cases: {error.body.message}
+            </div>
+        </template>
+        <template if:false={cases}>
+            <div class="slds-text-body_regular slds-m-around_medium">No cases found for this account.</div>
+        </template>
+    </lightning-card>
+</template>

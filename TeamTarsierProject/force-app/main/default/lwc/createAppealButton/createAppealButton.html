@@ -1,0 +1,62 @@
+<template>
+    <lightning-card title="Create Appeal For Selected Case" icon-name="standard:case">
+        <div class="slds-var-p-around_medium">
+            <!-- Button to create an appeal -->
+            <template if:true={showButton}>
+                <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+                    <button class="slds-button slds-button_brand create-appeal-button" onclick={handleButtonClick}>
+                        Create New Appeal
+                    </button>
+                </div>
+            </template>
+
+            <!-- Form to enter appeal details -->
+            <template if:true={showForm}>
+                <div class="slds-grid slds-grid_vertical slds-grid_align-center">
+                    <lightning-combobox
+                        class="input-field"
+                        label="Appeal Type"
+                        value={appealType}
+                        placeholder="Select Appeal Type"
+                        options={appealTypeOptions}
+                        onchange={handleAppealTypeChange}
+                        required>
+                    </lightning-combobox>
+
+                    <lightning-input
+                        class="input-field"
+                        label="Description"
+                        value={description}
+                        placeholder="Enter description (max 100 characters)"
+                        maxlength="100"
+                        onchange={handleDescriptionChange}
+                        required>
+                    </lightning-input>
+
+                    <div class="slds-m-top_medium slds-grid slds-grid_align-center">
+                        <button class="slds-button slds-button_brand slds-m-right_small" onclick={handleSubmit}>
+                            Submit Appeal
+                        </button>
+                        <button class="slds-button slds-button_neutral" onclick={handleCancel}>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Success message after appeal creation -->
+            <template if:true={showSuccessMessage}>
+                <div class="slds-text-align_center slds-m-top_medium">
+                    Thank you! The appeal has been created.
+                </div>
+            </template>
+
+            <!-- Display error messages -->
+            <template if:true={message}>
+                <div class="slds-text-align_center slds-m-top_medium slds-text-color_error">
+                    {message}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

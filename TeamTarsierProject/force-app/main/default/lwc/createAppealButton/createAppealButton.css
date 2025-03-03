@@ -1,0 +1,31 @@
+.create-appeal-button {
+    background-color: #0070d2; /* Salesforce blue */
+    color: white;
+    font-size: 1.5rem; /* Larger font size */
+    padding: 1rem 2rem; /* Padding for a larger button */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-appeal-button:hover {
+    background-color: #005fb2; /* Darker blue on hover */
+}
+
+.create-appeal-button:active {
+    background-color: #004080; 
+}
+
+.create-appeal-button:disabled {
+    background-color: #dddbda; 
+    cursor: not-allowed; 
+}
+
+.message-error {
+    color: red;
+}
+
+.message-success {
+    color: green;
+}

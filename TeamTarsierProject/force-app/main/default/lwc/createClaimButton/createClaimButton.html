@@ -1,0 +1,58 @@
+<template>
+    <lightning-card title="Create Claim" icon-name="standard:case">
+        <div class="slds-align_absolute-center slds-p-around_medium">
+            <!-- Button to open the form -->
+            <template if:true={dontShowForm}>
+                <button class="slds-button slds-button_brand create-claim-button" onclick={handleButtonClick} disabled={isLoading}>
+                    Create Claim
+                </button>
+            </template>
+
+            <!-- Form to create a case -->
+            <template if:true={showForm}>
+                <lightning-combobox
+                    label="Claim Type"
+                    value={claimType}
+                    placeholder="Select Claim Type"
+                    options={claimTypeOptions}
+                    onchange={handleClaimTypeChange}
+                    required>
+                </lightning-combobox>
+
+                <lightning-combobox
+                    label="Reason"
+                    value={reason}
+                    placeholder="Select Reason"
+                    options={reasonOptions}
+                    onchange={handleReasonChange}
+                    required>
+                </lightning-combobox>
+
+                <lightning-input
+                    label="Subject"
+                    value={subject}
+                    placeholder="Enter subject"
+                    onchange={handleSubjectChange}
+                    required>
+                </lightning-input>
+
+                <lightning-textarea
+                    label="Description"
+                    value={description}
+                    placeholder="Enter description"
+                    onchange={handleDescriptionChange}
+                    required>
+                </lightning-textarea>
+
+                <div class="slds-m-top_medium">
+                    <button class="slds-button slds-button_brand" onclick={handleSubmit} disabled={isLoading}>
+                        Submit
+                    </button>
+                    <button class="slds-button slds-button_neutral" onclick={handleCancel} disabled={isLoading}>
+                        Cancel
+                    </button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

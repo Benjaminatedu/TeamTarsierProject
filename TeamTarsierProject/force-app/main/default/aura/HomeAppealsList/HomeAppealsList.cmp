@@ -1,0 +1,42 @@
+<aura:component controller="AppealListController" implements="flexipage:availableForAllPageTypes" access="global">
+    <!-- Attributes -->
+    <aura:attribute name="appeals" type="Appeal__c[]" />
+    <aura:attribute name="error" type="String" />
+
+    <!-- Handler for initialization -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- Add custom CSS for borders -->
+    <aura:html tag="style">
+        .appeal-card {
+            border: 1px solid #d8dde6;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            padding: 12px;
+        }
+    </aura:html>
+
+    <!-- Display appeals in a vertical stack -->
+    <lightning:card title="Most Recent Appeals" iconName="standard:case">
+        <aura:if isTrue="{!not(empty(v.appeals))}">
+            <div>
+                <aura:iteration items="{!v.appeals}" var="appeal">
+                    <div class="appeal-card">
+                        <p><strong>Appeal Number: </strong> {!appeal.Name}</p>
+                        <p><strong>Status: </strong> {!appeal.Appeal_Status__c}</p>
+                        <p><strong>Related Case: </strong> {!appeal.Related_Case__r.CaseNumber}</p>
+                        <lightning:button label="View Appeals" onclick="{!c.navigateToAppeal}" value="{!appeal.Id}" variant="brand" class="slds-m-top_small" />
+                    </div>
+                </aura:iteration>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!empty(v.appeals)}">
+            <p>No Appeals found.</p>
+        </aura:if>
+    </lightning:card>
+
+    <!-- Display errors -->
+    <aura:if isTrue="{!not(empty(v.error))}">
+        <p class="slds-text-color_error">{!v.error}</p>
+    </aura:if>
+</aura:component>
