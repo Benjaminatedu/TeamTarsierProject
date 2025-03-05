@@ -24,4 +24,21 @@ public with sharing class ClaimCasesController {
             throw new AuraHandledException('Error fetching cases: ' + e.getMessage());
         }
     }
+
+    @AuraEnabled
+    public static void createAttachment(Id parentId, String fileName, String base64Data) {
+        try {
+            // Create a new Attachment record
+            Attachment attachment = new Attachment();
+            attachment.ParentId = parentId; // The Case Id
+            attachment.Name = fileName;
+            attachment.Body = EncodingUtil.base64Decode(base64Data); // Decode the base64 data
+            insert attachment;
+
+            System.debug('Attachment created successfully: ' + attachment.Id);
+        } catch (Exception e) {
+            System.debug('Error creating attachment: ' + e.getMessage());
+            throw new AuraHandledException('Error creating attachment: ' + e.getMessage());
+        }
+    }
 }

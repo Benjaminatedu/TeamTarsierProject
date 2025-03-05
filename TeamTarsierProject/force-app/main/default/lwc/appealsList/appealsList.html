@@ -16,6 +16,10 @@
                         <div class="slds-text-body_regular">Filed Date: {appeal.Filed_Date__c}</div>
                         <div class="slds-text-body_regular">Appeal Type: {appeal.Appeal_Type__c}</div>
                         <div class="slds-text-body_small">Appeal Status: {appeal.Appeal_Status__c}</div>
+                        <!-- Add a button to upload a file -->
+                        <lightning-button label="Add File" onclick={handleAddAttachment} data-id={appeal.Id} class="slds-m-top_small"></lightning-button>
+                        <!-- Hidden file input -->
+                        <input type="file" data-id={appeal.Id} class="slds-hidden" onchange={handleFileChange} />
                     </li>
                 </template>
             </ul>

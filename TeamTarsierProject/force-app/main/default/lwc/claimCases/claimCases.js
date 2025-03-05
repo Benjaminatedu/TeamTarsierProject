@@ -1,5 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import getClaimCases from '@salesforce/apex/ClaimCasesController.getClaimCases';
+import createAttachment from '@salesforce/apex/ClaimCasesController.createAttachment'; // Import the Apex method
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class ClaimCases extends LightningElement {
     cases;
@@ -67,5 +69,62 @@ export default class ClaimCases extends LightningElement {
             ...caseRecord,
             classString: this.getStatusClass(caseRecord.Status) + (this.selectedClaimId === caseRecord.Id ? ' selected-claim' : '')
         }));
+    }
+
+    // Handle the "Add Attachment" button click
+    handleAddAttachment(event) {
+        const caseId = event.target.dataset.id;
+        const fileInput = this.template.querySelector(`input[data-id="${caseId}"]`);
+        fileInput.click();
+    }
+
+    // Handle file selection
+    handleFileChange(event) {
+        const caseId = event.target.dataset.id;
+        const file = event.target.files[0];
+        if (file) {
+            this.uploadFile(caseId, file);
+        }
+    }
+
+    // Upload the file and create an attachment using Apex
+    async uploadFile(caseId, file) {
+        const base64 = await this.toBase64(file);
+        try {
+            // Call the Apex method to create the attachment
+            await createAttachment({
+                parentId: caseId,
+                fileName: file.name,
+                base64Data: base64.split(',')[1] // Remove the data URL prefix
+            });
+
+            // Show a success toast
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Attachment uploaded successfully',
+                    variant: 'success',
+                }),
+            );
+        } catch (error) {
+            // Show an error toast
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error uploading attachment',
+                    message: error.body.message,
+                    variant: 'error',
+                }),
+            );
+        }
+    }
+
+    // Convert file to base64
+    toBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
     }
 }

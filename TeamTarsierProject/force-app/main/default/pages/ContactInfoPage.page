@@ -18,7 +18,17 @@
                     color: #777;
                     font-size: 16px;
                 }
-
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
             </style>
         </head>
         <body>
@@ -30,7 +40,7 @@
                         <th>Value</th>
                     </tr>
                     <tr>
-                        <td>Account Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Account Name</td>
                         <td>{!mostRecentAccount.Name}</td>
                     </tr>
                     <tr>
@@ -41,23 +51,22 @@
                         <td>Date of Birth</td>
                         <td>
                             <apex:outputText value="{0, date, MM/dd/yyyy}">
-                                <apex:param value="{!mostRecentAccount.Date_of_Birth__c}" />
+                                <apex:param value="{!mostRecentAccount.DateOfBirth}" />
                             </apex:outputText>
                         </td>
                     </tr>
                     <tr>
                         <td>Military Branch</td>
-                        <td>{!mostRecentAccount.Military_Branch__c}</td>
+                        <td>{!mostRecentAccount.MilitaryBranch}</td>
                     </tr>
                     <tr>
-                        <td>Current Disability Rating</td>
-                        <td>{!mostRecentAccount.Current_Disability_Rating__c}</td>
+                        <td>Current Disability Rating&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>{!mostRecentAccount.CurrentDisabilityRating}</td>
                     </tr>
                 </table>
             </div>
 
             <!-- Case Information Section -->
-
             <div class="case-info">
                 <br/>
                 <br/>
@@ -74,7 +83,7 @@
                                 <th>Value</th>
                             </tr>
                             <tr>
-                                <td>Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td>Status</td>
                                 <td>{!case.Status}</td>
                             </tr>
                             <tr>
@@ -82,8 +91,8 @@
                                 <td>{!case.Origin}</td>
                             </tr>
                             <tr>
-                                <td>Claim Type</td>
-                                <td>{!case.Claim_Type__c}</td>
+                                <td>Claim Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td>{!case.ClaimType}</td>
                             </tr>
                             <tr>
                                 <td>Reason</td>
