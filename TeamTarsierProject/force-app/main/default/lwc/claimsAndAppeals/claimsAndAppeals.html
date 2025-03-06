@@ -7,8 +7,10 @@
 
         <!-- Right Panel: Appeals List and Create Appeal Button -->
         <div class="slds-col slds-size_1-of-2 slds-grid slds-grid_vertical slds-grid_align-center">
-            <c-create-appeal-button claim-id={selectedClaimId} style="margin-bottom: 10px;"></c-create-appeal-button>
-            <c-appeals-list></c-appeals-list>
+            <c-claim-details selected-claim-id={selectedClaimId}></c-claim-details>
+            <template if:true={selectedClaimId}>
+                <c-create-appeal-button claim-id={selectedClaimId}></c-create-appeal-button>
+            </template>
         </div>
     </div>
 </template>

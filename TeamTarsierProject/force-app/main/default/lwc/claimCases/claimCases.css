@@ -56,8 +56,14 @@
     border-left: 4px solid #ffd04f; /* Yellow */
 }
 
-/* Highlight the selected claim */
 .selected-claim {
     background-color: #f0f8ff; /* Light blue background */
     border: 2px solid #0070d2; /* Salesforce blue border */
+}
+
+.scrollable-container {
+    max-height: 500px; 
+    overflow-y: auto; 
+    border: 1px solid #dddbda; 
+    border-radius: 4px; 
 }

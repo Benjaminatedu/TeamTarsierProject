@@ -10,41 +10,50 @@
 
             <!-- Form to create a case -->
             <template if:true={showForm}>
-                <lightning-combobox
-                    label="Claim Type"
-                    value={claimType}
-                    placeholder="Select Claim Type"
-                    options={claimTypeOptions}
-                    onchange={handleClaimTypeChange}
-                    required>
-                </lightning-combobox>
+                <div class="slds-p-around_medium">
+                    <lightning-combobox
+                        label="Claim Type"
+                        value={claimType}
+                        placeholder="Select Claim Type"
+                        options={claimTypeOptions}
+                        onchange={handleClaimTypeChange}
+                        required>
+                    </lightning-combobox>
+                </div>
 
-                <lightning-combobox
-                    label="Reason"
-                    value={reason}
-                    placeholder="Select Reason"
-                    options={reasonOptions}
-                    onchange={handleReasonChange}
-                    required>
-                </lightning-combobox>
+                <div class="slds-p-around_medium">
+                    <lightning-combobox
+                        label="Reason"
+                        value={reason}
+                        placeholder="Select Reason"
+                        options={reasonOptions}
+                        onchange={handleReasonChange}
+                        required>
+                    </lightning-combobox>
+                </div>
 
-                <lightning-input
-                    label="Subject"
-                    value={subject}
-                    placeholder="Enter subject"
-                    onchange={handleSubjectChange}
-                    required>
-                </lightning-input>
+                <div class="slds-p-around_medium">
+                    <lightning-input
+                        label="Subject"
+                        value={subject}
+                        placeholder="Enter subject"
+                        onchange={handleSubjectChange}
+                        required>
+                    </lightning-input>
+                </div>
 
-                <lightning-textarea
-                    label="Description"
-                    value={description}
-                    placeholder="Enter description"
-                    onchange={handleDescriptionChange}
-                    required>
-                </lightning-textarea>
+                <div class="slds-p-around_medium">
+                    <lightning-textarea
+                        label="Description"
+                        value={description}
+                        placeholder="Enter description"
+                        onchange={handleDescriptionChange}
+                        rows="5" 
+                        required>
+                    </lightning-textarea>
+                </div>
 
-                <div class="slds-m-top_medium">
+                <div class="slds-m-top_medium slds-p-around_medium">
                     <button class="slds-button slds-button_brand" onclick={handleSubmit} disabled={isLoading}>
                         Submit
                     </button>

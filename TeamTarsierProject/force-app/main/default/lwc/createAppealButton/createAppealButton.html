@@ -4,7 +4,7 @@
             <!-- Button to create an appeal -->
             <template if:true={showButton}>
                 <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center">
-                    <button class="slds-button slds-button_brand create-appeal-button" onclick={handleButtonClick}>
+                    <button class="slds-button slds-button_brand create-appeal-button" onclick={handleButtonClick} disabled={isButtonDisabled}>
                         Create New Appeal
                     </button>
                 </div>

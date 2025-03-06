@@ -1,0 +1,67 @@
+<template>
+    <template if:true={claim}>
+        <div class="slds-box">
+            <h2 class="slds-text-heading_medium">Claim Details</h2>
+            <p><strong>Subject:</strong> {claim.subject}</p>
+            <p><strong>Description:</strong> {claim.description}</p>
+            <p><strong>Case Number:</strong> {claim.caseNumber}</p>
+            <p><strong>Status:</strong> {claim.status}</p>
+            <p><strong>Claim Type:</strong> {claim.claimType}</p>
+            <p><strong>Reason:</strong> {claim.reason}</p>
+            <p><strong>Created Date:</strong> {claim.createdDate}</p>
+        </div>
+
+        <div class="slds-box">
+            <h2 class="slds-text-heading_medium">Appeals</h2>
+            <template if:true={appeals.length}>
+                <ul>
+                    <template for:each={appeals} for:item="appeal">
+                        <li key={appeal.name}>
+                            <p><strong>Name:</strong> {appeal.name}</p>
+                            <p><strong>Status:</strong> {appeal.appealStatus}</p>
+                            <p><strong>Filed Date:</strong> {appeal.filedDate}</p>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template if:false={appeals.length}>
+                <p>No appeals found.</p>
+            </template>
+        </div>
+
+        <div class="slds-box">
+            <h2 class="slds-text-heading_medium">Attachments</h2>
+            <!-- Add a button to upload an attachment -->
+            <lightning-button
+                label="Add Attachment"
+                onclick={handleAddAttachment}
+                data-id={selectedClaimId} 
+                class="slds-m-top_small">
+            </lightning-button>
+            <!-- Hidden file input -->
+            <input
+                type="file"
+                data-id={selectedClaimId} 
+                class="slds-hidden"
+                onchange={handleFileChange} />
+            <template if:true={attachments.length}>
+                <ul>
+                    <template for:each={attachments} for:item="attachment">
+                        <li key={attachment.name}>
+                            <p><strong>Name:</strong> {attachment.name}</p>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template if:false={attachments.length}>
+                <p>No attachments found.</p>
+            </template>
+        </div>
+    </template>
+    <template if:true={error}>
+        <div class="slds-text-color_error">{error}</div>
+    </template>
+    <template if:false={claim}>
+        <p>No claim selected.</p>
+    </template>
+</template>

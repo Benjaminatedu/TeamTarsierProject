@@ -1,22 +1,18 @@
 <template>
     <lightning-card title="Claim Cases" icon-name="standard:case">
         <template if:true={cases}>
-            <ul class="slds-list slds-list_vertical slds-box slds-m-around_medium">
-                <template for:each={cases} for:item="caseRecord">
-                    <li key={caseRecord.Id} class="slds-item slds-p-around_small" data-id={caseRecord.Id} onclick={handleClaimClick}>
-                        <div class={caseRecord.classString}>
-                            <div class="slds-text-heading_small">{caseRecord.CaseNumber}</div>
-                            <div class="slds-text-body_regular">{caseRecord.Subject}</div>
-                            <div class="slds-text-body_small">Status: {caseRecord.Status}</div>
-                            <div class="slds-text-body_small">Description: {caseRecord.Description}</div>
-                            <!-- Add a button to upload an attachment -->
-                            <lightning-button label="Add Attachment" onclick={handleAddAttachment} data-id={caseRecord.Id} class="slds-m-top_small"></lightning-button>
-                            <!-- Hidden file input -->
-                            <input type="file" data-id={caseRecord.Id} class="slds-hidden" onchange={handleFileChange} />
-                        </div>
-                    </li>
-                </template>
-            </ul>
+            <div class="scrollable-container">
+                <ul class="slds-list slds-list_vertical slds-box slds-m-around_medium">
+                    <template for:each={cases} for:item="caseRecord">
+                        <li key={caseRecord.Id} class="slds-item slds-p-around_small" data-id={caseRecord.Id} onclick={handleClaimClick}>
+                            <div class={caseRecord.classString}>
+                                <div class="slds-text-heading_small">{caseRecord.CaseNumber}</div>
+                                <div class="slds-text-body_regular">Subject: {caseRecord.Subject}</div>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </div>
         </template>
         <template if:true={error}>
             <div class="slds-text-color_error slds-m-around_medium">

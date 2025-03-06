@@ -1,26 +1,65 @@
 import { LightningElement, api } from 'lwc';
 import canCreateAppeal from '@salesforce/apex/CreateAppealController.canCreateAppeal';
 import createAppeal from '@salesforce/apex/CreateAppealController.createAppeal';
-import { NavigationMixin } from 'lightning/navigation'; // Import NavigationMixin for page reload
+import { NavigationMixin } from 'lightning/navigation';
 
 export default class CreateAppealButton extends NavigationMixin(LightningElement) {
-    @api claimId; // Claim ID passed from the parent component
-    showButton = true; 
-    showForm = false; 
-    showSuccessMessage = false; 
-    message = ''; 
+    _claimId; // Private property to store the claimId
+    showButton = true;
+    showForm = false;
+    showSuccessMessage = false;
+    message = '';
     isError = false;
+    isButtonDisabled = true; // Button is disabled by default
 
-    appealType = ''; // Selected appeal type
-    description = ''; // Entered description
+    appealType = '';
+    description = '';
 
-    // Appeal type options for the combobox
     appealTypeOptions = [
         { label: 'New Evidence', value: 'New Evidence' },
         { label: 'Review Request', value: 'Review Request' },
         { label: 'Hearing Request', value: 'Hearing Request' },
         { label: 'Other', value: 'Other' }
     ];
+
+    // Setter for claimId to react to changes
+    @api
+    get claimId() {
+        return this._claimId;
+    }
+
+    set claimId(value) {
+        this._claimId = value;
+        this.checkAppealCreation(); // Re-run the check when claimId changes
+    }
+
+    // Method to check if an appeal can be created
+    checkAppealCreation() {
+        if (!this.claimId) {
+            this.message = 'No claim selected.';
+            this.isError = true;
+            this.isButtonDisabled = true; // Disable the button if no claim is selected
+            return;
+        }
+
+        canCreateAppeal({ claimId: this.claimId })
+            .then(result => {
+                this.isButtonDisabled = !result.canCreate; // Disable the button if canCreate is false
+                if (!result.canCreate) {
+                    this.message = result.disableReason; 
+                    this.isError = true;
+                } else {
+                    this.message = ''; 
+                    this.isError = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error checking appeal creation status:', error);
+                this.message = 'An error occurred while checking appeal eligibility.';
+                this.isError = true;
+                this.isButtonDisabled = true; 
+            });
+    }
 
     // Handle button click to show the form
     handleButtonClick() {
@@ -38,8 +77,8 @@ export default class CreateAppealButton extends NavigationMixin(LightningElement
                     this.isError = true;
                 } else {
                     this.showButton = false; // Hide the button
-                    this.showForm = true; // Show the form
-                    this.message = ''; // Clear any previous messages
+                    this.showForm = true; 
+                    this.message = ''; 
                 }
             })
             .catch(error => {
@@ -58,7 +97,6 @@ export default class CreateAppealButton extends NavigationMixin(LightningElement
     handleDescriptionChange(event) {
         this.description = event.detail.value;
     }
-    
 
     // Handle form submission
     handleSubmit() {
@@ -75,12 +113,12 @@ export default class CreateAppealButton extends NavigationMixin(LightningElement
             description: this.description
         })
             .then(() => {
-                this.showForm = false; // Hide the form
-                this.showSuccessMessage = true; // Show the success message
+                this.showForm = false; 
+                this.showSuccessMessage = true; 
                 this.message = ''; // Clear any previous messages
                 setTimeout(() => {
                     this.reloadPage();
-                }, 2000); // Reset after 3 seconds
+                }, 2000); // Reset after 2 seconds
             })
             .catch(error => {
                 console.error('Error creating appeal:', error);
@@ -91,20 +129,19 @@ export default class CreateAppealButton extends NavigationMixin(LightningElement
 
     // Handle form cancellation
     handleCancel() {
-        this.showForm = false; // Hide the form
-        this.showButton = true; // Show the button
-        this.message = ''; // Clear any previous messages
+        this.showForm = false; 
+        this.showButton = true; 
+        this.message = ''; 
     }
-
 
     reloadPage() {
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__webPage',
             attributes: {
-                url: window.location.href // Reload the current page
+                url: window.location.href 
             }
         }).then(url => {
-            window.location.href = url; // Navigate to the same URL to reload the page
+            window.location.href = url; 
         });
     }
 }

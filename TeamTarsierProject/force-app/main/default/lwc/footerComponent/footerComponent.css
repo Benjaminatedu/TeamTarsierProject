@@ -1,0 +1,25 @@
+.footer-container {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-message {
+    font-size: 0.875rem;
+    color: #333;
+}
+
+a {
+    color: #0070d2;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

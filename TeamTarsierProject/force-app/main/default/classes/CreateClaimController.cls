@@ -31,6 +31,11 @@ public with sharing class CreateClaimController {
             newCase.Origin = 'Web';
             newCase.AccountId = veteranId;
 
+            // Use Database.DMLOptions to trigger assignment rules
+            Database.DMLOptions dmlOpts = new Database.DMLOptions();
+            dmlOpts.assignmentRuleHeader.useDefaultRule = true; // Use the default assignment rule
+            newCase.setOptions(dmlOpts);
+
             // Insert the case
             insert newCase;
 
