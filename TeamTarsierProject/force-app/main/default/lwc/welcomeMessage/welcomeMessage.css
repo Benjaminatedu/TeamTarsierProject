@@ -1,15 +1,15 @@
 .welcome-box {
-    background-color: #f3f2f2; /* Light gray background */
-    color: #080707; /* Dark text color */
-    font-size: 1.25rem; /* Medium font size */
-    padding: 1rem; /* Padding inside the box */
-    text-align: center; /* Center-align text */
-    border-radius: 4px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    /* margin-bottom: 20px; Space below the box */
+    background-color: #f3f2f2; 
+    color: #080707; 
+    font-size: 1.25rem; 
+    padding: 1rem; 
+    text-align: center; 
+    border-radius: 4px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    
 }
 .welcome-message {
-    color: #080707; /* Dark text color */
-    font-size: .75rem; /* Medium font size */
-    text-align: center; /* Center-align text */
+    color: #080707; 
+    font-size: .75rem; 
+    text-align: center; 
 }

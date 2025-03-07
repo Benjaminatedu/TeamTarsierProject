@@ -10,7 +10,7 @@ export default class CreateAppealButton extends NavigationMixin(LightningElement
     showSuccessMessage = false;
     message = '';
     isError = false;
-    isButtonDisabled = true; // Button is disabled by default
+    isButtonDisabled = true; 
 
     appealType = '';
     description = '';
@@ -30,7 +30,7 @@ export default class CreateAppealButton extends NavigationMixin(LightningElement
 
     set claimId(value) {
         this._claimId = value;
-        this.checkAppealCreation(); // Re-run the check when claimId changes
+        this.checkAppealCreation(); 
     }
 
     // Method to check if an appeal can be created
@@ -38,13 +38,13 @@ export default class CreateAppealButton extends NavigationMixin(LightningElement
         if (!this.claimId) {
             this.message = 'No claim selected.';
             this.isError = true;
-            this.isButtonDisabled = true; // Disable the button if no claim is selected
+            this.isButtonDisabled = true; 
             return;
         }
 
         canCreateAppeal({ claimId: this.claimId })
             .then(result => {
-                this.isButtonDisabled = !result.canCreate; // Disable the button if canCreate is false
+                this.isButtonDisabled = !result.canCreate; 
                 if (!result.canCreate) {
                     this.message = result.disableReason; 
                     this.isError = true;
@@ -73,7 +73,7 @@ export default class CreateAppealButton extends NavigationMixin(LightningElement
         canCreateAppeal({ claimId: this.claimId })
             .then(result => {
                 if (!result.canCreate) {
-                    this.message = result.disableReason; // Display the reason why appeal creation is not allowed
+                    this.message = result.disableReason; 
                     this.isError = true;
                 } else {
                     this.showButton = false; // Hide the button

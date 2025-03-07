@@ -3,7 +3,6 @@ import getClaimCases from '@salesforce/apex/ClaimCasesController.getClaimCases';
 
 export default class ClaimCases extends LightningElement {
     cases;
-    visibleCases; // New property to hold the first 5 cases
     error;
     selectedClaimId;
 
@@ -14,14 +13,12 @@ export default class ClaimCases extends LightningElement {
             this.cases = data.map(caseRecord => ({
                 ...caseRecord,
                 statusClass: this.getStatusClass(caseRecord.Status),
-                classString: this.getStatusClass(caseRecord.Status) // Initialize classString
+                classString: this.getStatusClass(caseRecord.Status) 
             }));
-            this.visibleCases = this.cases.slice(0, 5); // Only show the first 5 cases
             this.error = undefined;
         } else if (error) {
             this.error = error;
             this.cases = undefined;
-            this.visibleCases = undefined;
         }
     }
 
@@ -29,8 +26,8 @@ export default class ClaimCases extends LightningElement {
     handleClaimClick(event) {
         const claimId = event.currentTarget.dataset.id;
         if (claimId) {
-            this.selectedClaimId = claimId; // Update the selected claim ID
-            this.updateClassStrings(); // Update class strings for all cases
+            this.selectedClaimId = claimId; 
+            this.updateClassStrings(); 
             const selectedEvent = new CustomEvent('claimselected', {
                 detail: { claimId }
             });
@@ -70,6 +67,5 @@ export default class ClaimCases extends LightningElement {
             ...caseRecord,
             classString: this.getStatusClass(caseRecord.Status) + (this.selectedClaimId === caseRecord.Id ? ' selected-claim' : '')
         }));
-        this.visibleCases = this.cases.slice(0, 5); // Update visible cases
     }
 }

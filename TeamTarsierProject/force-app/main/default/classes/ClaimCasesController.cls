@@ -1,7 +1,5 @@
 public class ClaimCasesController {
 
-
-
     @AuraEnabled(cacheable=true)
     public static List<Case> getClaimCases() {
         try {

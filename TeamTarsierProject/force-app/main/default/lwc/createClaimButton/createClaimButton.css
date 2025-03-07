@@ -8,9 +8,8 @@
     margin-top: 1rem;
 }
 
-/* Style for the "Create Claim" button */
 .create-claim-button {
-    padding: 1rem 2rem; /* Increase padding to make the button bigger */
-    font-size: 1.25rem; /* Increase font size */
-    font-weight: bold; /* Make the text bold */
+    padding: 1rem 2rem; 
+    font-size: 1.25rem; 
+    font-weight: bold; 
 }

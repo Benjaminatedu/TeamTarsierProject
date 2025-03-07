@@ -9,11 +9,6 @@
                     <lightning-input label="First Name" value={firstName} data-field="firstName" onchange={handleInputChange}></lightning-input>
                     <lightning-input label="Last Name" value={lastName} data-field="lastName" onchange={handleInputChange}></lightning-input>
                     <lightning-input label="Email" type="email" value={email} data-field="email" onchange={handleInputChange}></lightning-input>
-                    <!-- <lightning-input label="Street" value={street} data-field="street" onchange={handleInputChange}></lightning-input>
-                    <lightning-input label="City" value={city} data-field="city" onchange={handleInputChange}></lightning-input>
-                    <lightning-input label="State" value={state} data-field="state" onchange={handleInputChange}></lightning-input>
-                    <lightning-input label="Postal Code" value={postalCode} data-field="postalCode" onchange={handleInputChange}></lightning-input>
-                    <lightning-input label="Country" value={country} data-field="country" onchange={handleInputChange}></lightning-input> -->
                     <lightning-input label="Phone Number" type="tel" value={phoneNumber} data-field="phoneNumber" onchange={handleInputChange}></lightning-input>
                 </template>
                 <template if:false={isEditMode}>

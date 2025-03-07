@@ -61,9 +61,9 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
         { label: 'No Formal Education', value: 'No Formal Education' },
         { label: 'High School Diploma or GED', value: 'High School Diploma or GED' },
         { label: 'Some College Trade School', value: 'Some College Trade School' },
-        { label: 'Associate’s Degree', value: 'Associate’s Degree' },
-        { label: 'Bachelor’s Degree', value: 'Bachelor’s Degree' },
-        { label: 'Master’s Degree', value: 'Master’s Degree' },
+        { label: "Associate's Degree", value: "Associate's Degree" },
+        { label: "Bachelor's Degree", value: "Bachelor's Degree" },
+        { label: "Master's Degree", value: "Master's Degree" },
         { label: 'Doctorate Professional Degree', value: 'Doctorate Professional Degree' },
         { label: 'Military Training', value: 'Military Training' },
         { label: 'Vocational Technical Certification', value: 'Vocational Technical Certification' },
@@ -148,7 +148,6 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
         this.description = event.target.value;
     }
 
-    // Handle additional field changes
     handleServiceConnectedInjuryChange(event) {
         this.serviceConnectedInjury = event.target.checked;
     }

@@ -29,9 +29,9 @@ public with sharing class UserInfoController {
         // Query the most recent Account for the current user
         List<Account> mostRecentAccounts = [SELECT Id, Name, Phone, Date_of_Birth__c, 
                                                    Military_Branch__c, Current_Disability_Rating__c,
-                                                   Military_Service__r.Discharge_Status__c, // Lookup relationship
-                                                   Military_Service__r.Service_End_Date__c, // Lookup relationship
-                                                   Military_Service__r.Service_Start_Date__c // Lookup relationship
+                                                   Military_Service__r.Discharge_Status__c, 
+                                                   Military_Service__r.Service_End_Date__c, 
+                                                   Military_Service__r.Service_Start_Date__c 
                                             FROM Account 
                                             WHERE Veteran_del__c = :UserInfo.getUserId() 
                                             ORDER BY CreatedDate DESC 

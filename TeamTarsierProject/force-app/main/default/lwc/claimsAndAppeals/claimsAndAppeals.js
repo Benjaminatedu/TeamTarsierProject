@@ -4,6 +4,6 @@ export default class ClaimsAndAppeals extends LightningElement {
     selectedClaimId;
 
     handleClaimSelected(event) {
-        this.selectedClaimId = event.detail.claimId; // Set the selected claim ID
+        this.selectedClaimId = event.detail.claimId; 
     }
 }

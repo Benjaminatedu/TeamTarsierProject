@@ -6,7 +6,7 @@
     <!-- Handler for initialization -->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-    <!-- Add custom CSS for borders -->
+    <!-- CSS -->
     <aura:html tag="style">
         .case-card {
             border: 1px solid #d8dde6;

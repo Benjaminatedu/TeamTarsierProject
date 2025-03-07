@@ -1,16 +1,16 @@
 import { LightningElement, api, wire } from 'lwc';
 import getClaimDetails from '@salesforce/apex/ClaimCasesController.getClaimDetails';
 import createAttachment from '@salesforce/apex/ClaimCasesController.createAttachment';
-import uploadFile from '@salesforce/apex/AppealsController.uploadFile'; // Apex method for uploading files
+import uploadFile from '@salesforce/apex/AppealsController.uploadFile'; 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class ClaimDetails extends LightningElement {
-    @api selectedClaimId; // Selected claim ID passed from parent
+    @api selectedClaimId; 
 
-    claim; // Claim data
-    appeals = []; // List of appeals
-    attachments = []; // List of attachments
-    error; // Error message
+    claim; 
+    appeals = []; 
+    attachments = []; 
+    error; 
 
     // Wire service to fetch claim details
     @wire(getClaimDetails, { claimId: '$selectedClaimId' })
@@ -20,13 +20,13 @@ export default class ClaimDetails extends LightningElement {
             this.appeals = data.appeals || [];
             this.attachments = data.attachments || [];
             this.error = undefined;
-            console.log('Appeals:', this.appeals); // Debugging: Log the appeals data
+
         } else if (error) {
             this.claim = undefined;
             this.appeals = [];
             this.attachments = [];
             this.error = 'Error loading claim details: ' + error.body.message;
-            console.error('Error:', error);
+
         }
     }
 
@@ -46,7 +46,7 @@ export default class ClaimDetails extends LightningElement {
 
     // Handle file selection
     handleFileChange(event) {
-        const parentId = event.target.dataset.id; // Get the parent Id (could be case or appeal)
+        const parentId = event.target.dataset.id;
         const file = event.target.files[0];
         if (file) {
             this.uploadFile(parentId, file);
@@ -57,7 +57,7 @@ export default class ClaimDetails extends LightningElement {
     async uploadFile(parentId, file) {
         const base64 = await this.toBase64(file);
         try {
-            // Determine if the parent is a case or an appeal
+
             if (this.isCase(parentId)) {
                 // Call the Apex method to create the attachment for cases
                 await createAttachment({
@@ -106,7 +106,7 @@ export default class ClaimDetails extends LightningElement {
 
     // Helper method to determine if the parent is a case
     isCase(parentId) {
-        // Assuming that case IDs start with '500' and appeal IDs start with something else
+        // case ID's start with 500
         return parentId.startsWith('500');
     }
 }

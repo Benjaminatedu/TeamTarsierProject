@@ -1,6 +1,19 @@
 public with sharing class CreateClaimController {
     @AuraEnabled
-    public static Case createCase(String claimType, String reason, String subject, String description, Id veteranId) {
+    public static Case createCase(
+        String claimType, 
+        String reason, 
+        String subject, 
+        String description, 
+        Id veteranId,
+        Boolean serviceConnectedInjury,
+        Date dateOfInjury,
+        Boolean age65OrPermanentlyDisabled,
+        String currentHealthStatus,
+        String typeOfTrainingEducation,
+        String educationTrainingInstitute,
+        String housingStatus
+    ) {
         try {
             // Validate input
             if (String.isBlank(claimType)) {
@@ -30,10 +43,17 @@ public with sharing class CreateClaimController {
             newCase.Status = 'Received';
             newCase.Origin = 'Web';
             newCase.AccountId = veteranId;
+            newCase.Service_Connected_Injury__c = serviceConnectedInjury;
+            newCase.Date_Of_Injury__c = dateOfInjury;
+            newCase.Age_65_or_Permanently_Disabled__c = age65OrPermanentlyDisabled;
+            newCase.Current_Health_Status__c = currentHealthStatus;
+            newCase.Type_of_Training_Education__c = typeOfTrainingEducation;
+            newCase.Education_Training_Institute__c = educationTrainingInstitute;
+            newCase.Housing_Status__c = housingStatus;
 
             // Use Database.DMLOptions to trigger assignment rules
             Database.DMLOptions dmlOpts = new Database.DMLOptions();
-            dmlOpts.assignmentRuleHeader.useDefaultRule = true; // Use the default assignment rule
+            dmlOpts.assignmentRuleHeader.useDefaultRule = true; 
             newCase.setOptions(dmlOpts);
 
             // Insert the case
@@ -43,7 +63,7 @@ public with sharing class CreateClaimController {
             return newCase;
         } catch (Exception e) {
             // Throw an AuraHandledException to propagate the error to the LWC
-            throw new AuraHandledException('Failed to create case: ' + e.getMessage());
+            throw new AuraHandledException('Failed to create case: ' + e.getStackTraceString());
         }
     }
 }
