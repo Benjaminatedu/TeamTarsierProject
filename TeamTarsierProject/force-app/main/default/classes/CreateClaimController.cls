@@ -15,7 +15,7 @@ public with sharing class CreateClaimController {
         String housingStatus
     ) {
         try {
-            // Validate input
+            // Validate required input
             if (String.isBlank(claimType)) {
                 throw new AuraHandledException('Claim Type is required.');
             }
@@ -43,13 +43,21 @@ public with sharing class CreateClaimController {
             newCase.Status = 'Received';
             newCase.Origin = 'Web';
             newCase.AccountId = veteranId;
-            newCase.Service_Connected_Injury__c = serviceConnectedInjury;
-            newCase.Date_Of_Injury__c = dateOfInjury;
-            newCase.Age_65_or_Permanently_Disabled__c = age65OrPermanentlyDisabled;
-            newCase.Current_Health_Status__c = currentHealthStatus;
-            newCase.Type_of_Training_Education__c = typeOfTrainingEducation;
-            newCase.Education_Training_Institute__c = educationTrainingInstitute;
-            newCase.Housing_Status__c = housingStatus;
+
+            // Add fields based on claim type
+            if (claimType == 'Disability') {
+                newCase.Service_Connected_Injury__c = serviceConnectedInjury;
+                newCase.Date_Of_Injury__c = dateOfInjury;
+            } else if (claimType == 'Pension') {
+                newCase.Age_65_or_Permanently_Disabled__c = age65OrPermanentlyDisabled;
+            } else if (claimType == 'Healthcare') {
+                newCase.Current_Health_Status__c = currentHealthStatus;
+            } else if (claimType == 'Education') {
+                newCase.Type_of_Training_Education__c = typeOfTrainingEducation;
+                newCase.Education_Training_Institute__c = educationTrainingInstitute;
+            } else if (claimType == 'Housing') {
+                newCase.Housing_Status__c = housingStatus;
+            }
 
             // Use Database.DMLOptions to trigger assignment rules
             Database.DMLOptions dmlOpts = new Database.DMLOptions();
@@ -62,8 +70,12 @@ public with sharing class CreateClaimController {
             // Return the newly created case
             return newCase;
         } catch (Exception e) {
+            // Log the error for debugging
+            System.debug('Error creating case: ' + e.getMessage());
+            System.debug('Stack trace: ' + e.getStackTraceString());
+
             // Throw an AuraHandledException to propagate the error to the LWC
-            throw new AuraHandledException('Failed to create case: ' + e.getStackTraceString());
+            throw new AuraHandledException('Failed to create case: ' + e.getMessage());
         }
     }
 }

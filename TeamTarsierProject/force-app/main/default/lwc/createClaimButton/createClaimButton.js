@@ -5,25 +5,26 @@ import getMostRecentAccountId from '@salesforce/apex/UserInfoController.getMostR
 import createCase from '@salesforce/apex/CreateClaimController.createCase';
 
 export default class CreateClaimButton extends NavigationMixin(LightningElement) {
-    showForm = false; // Whether to show the form
-    isLoading = false; // Loading state
-    showAdditionalFields = false; // Whether to show additional fields
+    showForm = false; 
+    isLoading = false; 
+    showAdditionalFields = false; 
 
-    // Form fields
-    claimType = '';
-    reason = '';
-    subject = '';
-    description = '';
-    veteranId; // Veteran__c lookup field
 
-    // Additional fields based on claim type
-    serviceConnectedInjury = false;
-    dateOfInjury = '';
-    age65OrPermanentlyDisabled = false;
-    currentHealthStatus = '';
-    typeOfTrainingEducation = '';
-    educationTrainingInstitute = '';
-    housingStatus = '';
+   // Form fields
+   claimType = '';
+   reason = '';
+   subject = '';
+   description = '';
+   veteranId = null; // Veteran__c lookup field
+
+   // Additional fields based on claim type
+   serviceConnectedInjury = null;
+   dateOfInjury = null;
+   age65OrPermanentlyDisabled = null;
+   currentHealthStatus = null;
+   typeOfTrainingEducation = null;
+   educationTrainingInstitute = null;
+   housingStatus = null;
 
     // Claim Type options
     claimTypeOptions = [
@@ -178,29 +179,32 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
 
     // Handle form submission
     async handleSubmit() {
-        if (!this.claimType || !this.reason || !this.subject || !this.description) {
-            this.showToast('Error', 'Please fill out all fields.', 'error');
-            return;
-        }
 
-        this.isLoading = true;
         try {
-            // Call Apex method to create the case
-            await createCase({
-                claimType: this.claimType,
-                reason: this.reason,
-                subject: this.subject,
-                description: this.description,
-                veteranId: this.veteranId,
-                serviceConnectedInjury: this.serviceConnectedInjury,
-                dateOfInjury: this.dateOfInjury,
-                age65OrPermanentlyDisabled: this.age65OrPermanentlyDisabled,
-                currentHealthStatus: this.currentHealthStatus,
-                typeOfTrainingEducation: this.typeOfTrainingEducation,
-                educationTrainingInstitute: this.educationTrainingInstitute,
-                housingStatus: this.housingStatus
-            });
-
+        const claimData = {
+            claimType: this.claimType,
+            reason: this.reason,
+            subject: this.subject,
+            description: this.description,
+            veteranId: this.veteranId
+        };
+    
+        // Add fields based on claim type
+        if (this.claimType === 'Disability') {
+            claimData.serviceConnectedInjury = this.serviceConnectedInjury;
+            claimData.dateOfInjury = this.dateOfInjury;
+        } else if (this.claimType === 'Pension') {
+            claimData.age65OrPermanentlyDisabled = this.age65OrPermanentlyDisabled;
+        } else if (this.claimType === 'Healthcare') {
+            claimData.currentHealthStatus = this.currentHealthStatus;
+        } else if (this.claimType === 'Education') {
+            claimData.typeOfTrainingEducation = this.typeOfTrainingEducation;
+            claimData.educationTrainingInstitute = this.educationTrainingInstitute;
+        } else if (this.claimType === 'Housing') {
+            claimData.housingStatus = this.housingStatus;
+        }
+    
+        createCase(claimData)
             // Show success message
             this.showToast('Success', 'Case created successfully.', 'success');
 
