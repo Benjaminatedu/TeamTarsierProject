@@ -1,0 +1,20 @@
+<apex:page controller="UserCreationController">
+    <apex:form>
+        <apex:pageMessages /> <!-- Display any error or success messages -->
+
+        <h1>Create a New User</h1>
+
+        <apex:pageBlock title="User Information">
+            <apex:pageBlockSection columns="1">
+                <apex:inputText label="Username" value="{!username}" required="true"/>
+                <apex:inputText label="Email" value="{!email}" required="true"/>
+                <apex:inputText label="Alias" value="{!alias}" required="true"/>
+                <apex:inputText label="First Name" value="{!firstName}" required="true"/>
+                <apex:inputText label="Last Name" value="{!lastName}" required="true"/>
+                <apex:inputText label="Nick Name" value="{!communityNickname}" required="true"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:commandButton value="Create User" action="{!createUser}" rerender="messages" />
+    </apex:form>
+</apex:page>
