@@ -21,46 +21,123 @@
                     </lightning-combobox>
                 </div>
 
-                <div class="slds-p-around_medium">
-                    <lightning-combobox
-                        label="Reason"
-                        value={reason}
-                        placeholder="Select Reason"
-                        options={reasonOptions}
-                        onchange={handleReasonChange}
-                        required>
-                    </lightning-combobox>
-                </div>
+                <!-- Additional fields based on claim type -->
+                <template if:true={showAdditionalFields}>
+                    <template if:true={isDisability}>
+                        <div class="slds-p-around_medium">
+                            <lightning-input
+                                type="checkbox"
+                                label="Service Connected Injury"
+                                checked={serviceConnectedInjury}
+                                onchange={handleServiceConnectedInjuryChange}>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-p-around_medium">
+                            <lightning-input
+                                type="date"
+                                label="Date of Injury"
+                                value={dateOfInjury}
+                                onchange={handleDateOfInjuryChange}>
+                            </lightning-input>
+                        </div>
+                    </template>
 
-                <div class="slds-p-around_medium">
-                    <lightning-input
-                        label="Subject"
-                        value={subject}
-                        placeholder="Enter subject"
-                        onchange={handleSubjectChange}
-                        required>
-                    </lightning-input>
-                </div>
+                    <template if:true={isPension}>
+                        <div class="slds-p-around_medium">
+                            <lightning-input
+                                type="checkbox"
+                                label="Age 65 or Permanently Disabled"
+                                checked={age65OrPermanentlyDisabled}
+                                onchange={handleAge65OrPermanentlyDisabledChange}>
+                            </lightning-input>
+                        </div>
+                    </template>
 
-                <div class="slds-p-around_medium">
-                    <lightning-textarea
-                        label="Description"
-                        value={description}
-                        placeholder="Enter description"
-                        onchange={handleDescriptionChange}
-                        rows="5" 
-                        required>
-                    </lightning-textarea>
-                </div>
+                    <template if:true={isHealthcare}>
+                        <div class="slds-p-around_medium">
+                            <lightning-combobox
+                                label="Current Health Status"
+                                value={currentHealthStatus}
+                                placeholder="Select Health Status"
+                                options={healthStatusOptions}
+                                onchange={handleCurrentHealthStatusChange}>
+                            </lightning-combobox>
+                        </div>
+                    </template>
 
-                <div class="slds-m-top_medium slds-p-around_medium">
-                    <button class="slds-button slds-button_brand" onclick={handleSubmit} disabled={isLoading}>
-                        Submit
-                    </button>
-                    <button class="slds-button slds-button_neutral" onclick={handleCancel} disabled={isLoading}>
-                        Cancel
-                    </button>
-                </div>
+                    <template if:true={isEducation}>
+                        <div class="slds-p-around_medium">
+                            <lightning-combobox
+                                label="Type of Training/Education"
+                                value={typeOfTrainingEducation}
+                                placeholder="Select Type"
+                                options={educationOptions}
+                                onchange={handleTypeOfTrainingEducationChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-p-around_medium">
+                            <lightning-input
+                                type="text"
+                                label="Education/Training Institute"
+                                value={educationTrainingInstitute}
+                                onchange={handleEducationTrainingInstituteChange}>
+                            </lightning-input>
+                        </div>
+                    </template>
+
+                    <template if:true={isHousing}>
+                        <div class="slds-p-around_medium">
+                            <lightning-combobox
+                                label="Housing Status"
+                                value={housingStatus}
+                                placeholder="Select Housing Status"
+                                options={housingStatusOptions}
+                                onchange={handleHousingStatusChange}>
+                            </lightning-combobox>
+                        </div>
+                    </template>
+
+                    <div class="slds-p-around_medium">
+                        <lightning-combobox
+                            label="Reason"
+                            value={reason}
+                            placeholder="Select Reason"
+                            options={reasonOptions}
+                            onchange={handleReasonChange}
+                            required>
+                        </lightning-combobox>
+                    </div>
+
+                    <div class="slds-p-around_medium">
+                        <lightning-input
+                            label="Subject"
+                            value={subject}
+                            placeholder="Enter subject"
+                            onchange={handleSubjectChange}
+                            required>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-around_medium">
+                        <lightning-textarea
+                            label="Description"
+                            value={description}
+                            placeholder="Enter description"
+                            onchange={handleDescriptionChange}
+                            rows="5" 
+                            required>
+                        </lightning-textarea>
+                    </div>
+
+                    <div class="slds-m-top_medium slds-p-around_medium">
+                        <button class="slds-button slds-button_brand" onclick={handleSubmit} disabled={isLoading}>
+                            Submit
+                        </button>
+                        <button class="slds-button slds-button_neutral" onclick={handleCancel} disabled={isLoading}>
+                            Cancel
+                        </button>
+                    </div>
+                </template>
             </template>
         </div>
     </lightning-card>

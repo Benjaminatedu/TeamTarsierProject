@@ -1,0 +1,130 @@
+<template>
+    <lightning-card title="User Profile Information" icon-name="standard:user" class="slds-card_boundary">
+        <div class="slds-grid slds-wrap slds-p-around_medium">
+            <!-- Left Column: User Information -->
+            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                <div class="slds-text-heading_small slds-m-bottom_medium">Personal Information</div>
+                <template if:true={isEditMode}>
+                    <!-- Edit Mode -->
+                    <lightning-input label="First Name" value={firstName} data-field="firstName" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="Last Name" value={lastName} data-field="lastName" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="Email" type="email" value={email} data-field="email" onchange={handleInputChange}></lightning-input>
+                    <!-- <lightning-input label="Street" value={street} data-field="street" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="City" value={city} data-field="city" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="State" value={state} data-field="state" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="Postal Code" value={postalCode} data-field="postalCode" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="Country" value={country} data-field="country" onchange={handleInputChange}></lightning-input> -->
+                    <lightning-input label="Phone Number" type="tel" value={phoneNumber} data-field="phoneNumber" onchange={handleInputChange}></lightning-input>
+                </template>
+                <template if:false={isEditMode}>
+                    <!-- Display Mode -->
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">First Name</div>
+                        <div class="slds-text-body_regular">{firstName}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">Last Name</div>
+                        <div class="slds-text-body_regular">{lastName}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">Email</div>
+                        <div class="slds-text-body_regular">{email}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">Phone Number</div>
+                        <div class="slds-text-body_regular">{phoneNumber}</div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Right Column: Address Information -->
+            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                <div class="slds-text-heading_small slds-m-bottom_medium">Address Information</div>
+                <template if:true={isEditMode}>
+                    <!-- Edit Mode -->
+                    <lightning-input label="Street" value={street} data-field="street" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="City" value={city} data-field="city" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="State" value={state} data-field="state" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="Postal Code" value={postalCode} data-field="postalCode" onchange={handleInputChange}></lightning-input>
+                    <lightning-input label="Country" value={country} data-field="country" onchange={handleInputChange}></lightning-input>
+                </template>
+                <template if:false={isEditMode}>
+                    <!-- Display Mode -->
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">Street</div>
+                        <div class="slds-text-body_regular">{street}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">City</div>
+                        <div class="slds-text-body_regular">{city}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">State</div>
+                        <div class="slds-text-body_regular">{state}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">Postal Code</div>
+                        <div class="slds-text-body_regular">{postalCode}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-small">
+                        <div class="slds-text-title">Country</div>
+                        <div class="slds-text-body_regular">{country}</div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Account Information -->
+<div class="slds-grid slds-wrap slds-p-around_medium">
+    <div class="slds-col slds-size_1-of-1 slds-p-around_medium">
+        <template if:false={isEditMode}>
+        <div class="slds-text-heading_small slds-m-bottom_medium">Account Information</div>
+            <!-- Display Mode -->
+            <div class="slds-grid slds-wrap">
+                <!-- Left Column -->
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-p-vertical_x-small">
+                        <div class="slds-text-title">Date of Birth</div>
+                        <div class="slds-text-body_regular">{accountDateOfBirth}</div>
+                    </div>
+                    <div class="slds-p-vertical_x-small">
+                        <div class="slds-text-title">Military Branch</div>
+                        <div class="slds-text-body_regular">{accountMilitaryBranch}</div>
+                    </div>
+                    <div class="slds-p-vertical_x-small">
+                        <div class="slds-text-title">Disability Rating</div>
+                        <div class="slds-text-body_regular">{accountDisabilityRating}</div>
+                    </div>
+                </div>
+                <!-- Right Column -->
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-p-vertical_x-small">
+                        <div class="slds-text-title">Discharge Status</div>
+                        <div class="slds-text-body_regular">{dischargeStatus}</div>
+                    </div>
+                    <div class="slds-p-vertical_x-small">
+                        <div class="slds-text-title">Service Start Date</div>
+                        <div class="slds-text-body_regular">{serviceStartDate}</div>
+                    </div>
+                    <div class="slds-p-vertical_x-small">
+                        <div class="slds-text-title">Service End Date</div>
+                        <div class="slds-text-body_regular">{serviceEndDate}</div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+
+        <!-- Edit Button -->
+        <div class="slds-p-around_medium">
+            <template if:true={isEditMode}>
+                <lightning-button padding="10px" label="Update" variant="brand" onclick={saveChanges}></lightning-button>
+                <lightning-button label="Finished" variant="brand" onclick={toggleEditMode}></lightning-button>
+            </template>
+            <template if:false={isEditMode}>
+                <lightning-button label="Edit" variant="brand" onclick={toggleEditMode}></lightning-button>
+            </template>
+        </div>
+    </lightning-card>
+</template>

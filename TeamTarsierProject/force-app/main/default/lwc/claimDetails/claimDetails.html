@@ -9,26 +9,35 @@
             <p><strong>Claim Type:</strong> {claim.claimType}</p>
             <p><strong>Reason:</strong> {claim.reason}</p>
             <p><strong>Created Date:</strong> {claim.createdDate}</p>
-        </div>
-
-        <div class="slds-box">
-            <h2 class="slds-text-heading_medium">Appeals</h2>
-            <template if:true={appeals.length}>
-                <ul>
-                    <template for:each={appeals} for:item="appeal">
-                        <li key={appeal.name}>
-                            <p><strong>Name:</strong> {appeal.name}</p>
-                            <p><strong>Status:</strong> {appeal.appealStatus}</p>
-                            <p><strong>Filed Date:</strong> {appeal.filedDate}</p>
-                        </li>
-                    </template>
-                </ul>
+        
+            <template if:true={claim.serviceConnectedInjury}>
+                <p><strong>Service Connected Injury:</strong> {claim.serviceConnectedInjury}</p>
             </template>
-            <template if:false={appeals.length}>
-                <p>No appeals found.</p>
+        
+            <template if:true={claim.dateOfInjury}>
+                <p><strong>Date of Injury:</strong> {claim.dateOfInjury}</p>
+            </template>
+        
+            <template if:true={claim.age65OrPermanentlyDisabled}>
+                <p><strong>Age 65 or Permanently Disabled:</strong> {claim.age65OrPermanentlyDisabled}</p>
+            </template>
+        
+            <template if:true={claim.currentHealthStatus}>
+                <p><strong>Current Health Status:</strong> {claim.currentHealthStatus}</p>
+            </template>
+        
+            <template if:true={claim.typeOfTrainingEducation}>
+                <p><strong>Type of Training/Education:</strong> {claim.typeOfTrainingEducation}</p>
+            </template>
+        
+            <template if:true={claim.educationTrainingInstitute}>
+                <p><strong>Education/Training Institute:</strong> {claim.educationTrainingInstitute}</p>
+            </template>
+        
+            <template if:true={claim.housingStatus}>
+                <p><strong>Housing Status:</strong> {claim.housingStatus}</p>
             </template>
         </div>
-
         <div class="slds-box">
             <h2 class="slds-text-heading_medium">Attachments</h2>
             <!-- Add a button to upload an attachment -->
@@ -57,6 +66,50 @@
                 <p>No attachments found.</p>
             </template>
         </div>
+
+        <div class="slds-box">
+            <h2 class="slds-text-heading_medium">Appeals</h2>
+            <template if:true={appeals.length}>
+                <ul>
+                    <template for:each={appeals} for:item="appeal">
+                        <li key={appeal.Id}>
+                            <p><strong>Name:</strong> {appeal.name}</p>
+                            <p><strong>Status:</strong> {appeal.appealStatus}</p>
+                            <p><strong>Filed Date:</strong> {appeal.filedDate}</p>
+        
+                            <!-- Display file names if they exist -->
+                            <template if:true={appeal.fileNames}>
+                                <p><strong>Files:</strong></p>
+                                <ul>
+                                    <template for:each={appeal.fileNames} for:item="fileName">
+                                        <li key={fileName}>{fileName}</li>
+                                    </template>
+                                </ul>
+                            </template>
+        
+                            <!-- Button to trigger file input -->
+                            <lightning-button
+                                label="Add File"
+                                onclick={handleAddAttachment}
+                                data-id={appeal.Id}
+                                class="slds-m-top_small">
+                            </lightning-button>
+                            <!-- Hidden file input -->
+                            <input
+                                type="file"
+                                data-id={appeal.Id}
+                                class="slds-hidden"
+                                onchange={handleFileChange} />
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template if:false={appeals.length}>
+                <p>No appeals found.</p>
+            </template>
+        </div>
+
+        
     </template>
     <template if:true={error}>
         <div class="slds-text-color_error">{error}</div>

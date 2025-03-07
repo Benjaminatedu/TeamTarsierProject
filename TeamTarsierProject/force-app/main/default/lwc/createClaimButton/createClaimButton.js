@@ -1,16 +1,13 @@
 import { LightningElement } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { NavigationMixin } from 'lightning/navigation'; // Import NavigationMixin
+import { NavigationMixin } from 'lightning/navigation';
 import getMostRecentAccountId from '@salesforce/apex/UserInfoController.getMostRecentAccountId';
 import createCase from '@salesforce/apex/CreateClaimController.createCase';
 
-export default class CreateClaimButton extends NavigationMixin(LightningElement) { // Use NavigationMixin
+export default class CreateClaimButton extends NavigationMixin(LightningElement) {
     showForm = false; // Whether to show the form
     isLoading = false; // Loading state
-
-    get dontShowForm() {
-        return !this.showForm;
-    }
+    showAdditionalFields = false; // Whether to show additional fields
 
     // Form fields
     claimType = '';
@@ -18,6 +15,15 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
     subject = '';
     description = '';
     veteranId; // Veteran__c lookup field
+
+    // Additional fields based on claim type
+    serviceConnectedInjury = false;
+    dateOfInjury = '';
+    age65OrPermanentlyDisabled = false;
+    currentHealthStatus = '';
+    typeOfTrainingEducation = '';
+    educationTrainingInstitute = '';
+    housingStatus = '';
 
     // Claim Type options
     claimTypeOptions = [
@@ -42,6 +48,70 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
         { label: 'Compensation Adjustment Request', value: 'Compensation Adjustment Request' }
     ];
 
+    // Health Status options
+    healthStatusOptions = [
+        { label: 'No Service-Connected Disabilities', value: 'No Service-Connected Disabilities' },
+        { label: 'Service-Connected Disability', value: 'Service-Connected Disability' },
+        { label: 'Individual Unemployability', value: 'Individual Unemployability' },
+        { label: 'Non-Service-Connected Disability', value: 'Non-Service-Connected Disability' }
+    ];
+
+    // Education options
+    educationOptions = [
+        { label: 'No Formal Education', value: 'No Formal Education' },
+        { label: 'High School Diploma or GED', value: 'High School Diploma or GED' },
+        { label: 'Some College Trade School', value: 'Some College Trade School' },
+        { label: 'Associate’s Degree', value: 'Associate’s Degree' },
+        { label: 'Bachelor’s Degree', value: 'Bachelor’s Degree' },
+        { label: 'Master’s Degree', value: 'Master’s Degree' },
+        { label: 'Doctorate Professional Degree', value: 'Doctorate Professional Degree' },
+        { label: 'Military Training', value: 'Military Training' },
+        { label: 'Vocational Technical Certification', value: 'Vocational Technical Certification' },
+        { label: 'On the Job Training', value: 'On the Job Training' }
+    ];
+
+    // Housing Status options
+    housingStatusOptions = [
+        { label: 'Stable Housing', value: 'Stable Housing' },
+        { label: 'Homeless', value: 'Homeless' },
+        { label: 'At Risk of Homelessness', value: 'At Risk of Homelessness' },
+        { label: 'Temporary Housing', value: 'Temporary Housing' },
+        { label: 'Living with Family/Friends', value: 'Living with Family/Friends' },
+        { label: 'Assisted Living Facility', value: 'Assisted Living Facility' },
+        { label: 'VA-Supported Housing (HUD-VASH)', value: 'VA-Supported Housing (HUD-VASH)' },
+        { label: 'Long-Term Care Facility', value: 'Long-Term Care Facility' },
+        { label: 'Transitional Housing', value: 'Transitional Housing' },
+        { label: 'Emergency Shelter', value: 'Emergency Shelter' }
+    ];
+
+    // Helper methods to determine which fields to show
+    get isDisability() {
+        return this.claimType === 'Disability';
+    }
+
+    get isPension() {
+        return this.claimType === 'Pension';
+    }
+
+    get isHealthcare() {
+        return this.claimType === 'Healthcare';
+    }
+
+    get isEducation() {
+        return this.claimType === 'Education';
+    }
+
+    get isHousing() {
+        return this.claimType === 'Housing';
+    }
+    
+    get dontShowForm() {
+        return !this.showForm;
+    }
+
+
+    
+
     // Open the form when the button is clicked
     async handleButtonClick() {
         this.isLoading = true;
@@ -63,6 +133,7 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
     // Handle form field changes
     handleClaimTypeChange(event) {
         this.claimType = event.detail.value;
+        this.showAdditionalFields = true; // Show additional fields when claim type is selected
     }
 
     handleReasonChange(event) {
@@ -75,6 +146,35 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
 
     handleDescriptionChange(event) {
         this.description = event.target.value;
+    }
+
+    // Handle additional field changes
+    handleServiceConnectedInjuryChange(event) {
+        this.serviceConnectedInjury = event.target.checked;
+    }
+
+    handleDateOfInjuryChange(event) {
+        this.dateOfInjury = event.target.value;
+    }
+
+    handleAge65OrPermanentlyDisabledChange(event) {
+        this.age65OrPermanentlyDisabled = event.target.checked;
+    }
+
+    handleCurrentHealthStatusChange(event) {
+        this.currentHealthStatus = event.detail.value;
+    }
+
+    handleTypeOfTrainingEducationChange(event) {
+        this.typeOfTrainingEducation = event.detail.value;
+    }
+
+    handleEducationTrainingInstituteChange(event) {
+        this.educationTrainingInstitute = event.target.value;
+    }
+
+    handleHousingStatusChange(event) {
+        this.housingStatus = event.detail.value;
     }
 
     // Handle form submission
@@ -92,7 +192,14 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
                 reason: this.reason,
                 subject: this.subject,
                 description: this.description,
-                veteranId: this.veteranId
+                veteranId: this.veteranId,
+                serviceConnectedInjury: this.serviceConnectedInjury,
+                dateOfInjury: this.dateOfInjury,
+                age65OrPermanentlyDisabled: this.age65OrPermanentlyDisabled,
+                currentHealthStatus: this.currentHealthStatus,
+                typeOfTrainingEducation: this.typeOfTrainingEducation,
+                educationTrainingInstitute: this.educationTrainingInstitute,
+                housingStatus: this.housingStatus
             });
 
             // Show success message
@@ -115,10 +222,18 @@ export default class CreateClaimButton extends NavigationMixin(LightningElement)
     // Reset the form
     resetForm() {
         this.showForm = false;
+        this.showAdditionalFields = false;
         this.claimType = '';
         this.reason = '';
         this.subject = '';
         this.description = '';
+        this.serviceConnectedInjury = false;
+        this.dateOfInjury = '';
+        this.age65OrPermanentlyDisabled = false;
+        this.currentHealthStatus = '';
+        this.typeOfTrainingEducation = '';
+        this.educationTrainingInstitute = '';
+        this.housingStatus = '';
     }
 
     // Show toast message
